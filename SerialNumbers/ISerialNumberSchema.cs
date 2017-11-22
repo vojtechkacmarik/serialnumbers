@@ -2,9 +2,9 @@
 {
     public interface ISerialNumberSchema
     {
-        string CustomerId { get; }
+        string Customer { get; }
 
-        string SchemaId { get; }
+        string Schema { get; }
 
         ISerialNumberSchemaDefinition SchemaDefinition { get; }
     }

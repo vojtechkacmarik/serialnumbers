@@ -1,0 +1,7 @@
+hangfire - konfigurace, migrace, 
+- UseSqlServer, atd. UseSqlLite, tj ruzne implementace - options
+zapis do db, 
+- DI container, typed factory - castle, autofac
+-- scoped instance, IServiceScopeFactory, per component ISerialNumbersProvider (nejaky jiny root, ktery v sobe ziska pres factory )
+- UTs
+nuget publish - version, pack, assembly info

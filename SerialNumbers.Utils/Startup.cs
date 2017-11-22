@@ -31,6 +31,7 @@ namespace SerialNumbers.Utils
             services.AddLogging();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSerialNumbers(Configuration.GetConnectionString(SerialNumberConstants.SERIAL_NUMBERS_CONNECTION));
+            services.AddSerialNumbersLocalDateTimeProvider();
             services.AddSingleton<ICommand, CreateCommand>();
             services.AddSingleton<ISerialNumbersCommandLineApplication, SerialNumbersCommandLineApplication>();
         }

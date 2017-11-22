@@ -1,11 +1,11 @@
 ﻿namespace SerialNumbers
 {
-    public interface ISerialNumberProvider
+    internal interface ISerialNumberProvider
     {
-        string GetLastSerialNumber(string schemaId);
+        string Current(string schema, string customer, params object[] args);
 
-        string GetNextSerialNumber(string schemaId, params object[] args);
+        string Next(string schema, string customer, params object[] args);
 
-        void Reset(string schemaId);
+        void Reset(string schema, string customer);
     }
 }

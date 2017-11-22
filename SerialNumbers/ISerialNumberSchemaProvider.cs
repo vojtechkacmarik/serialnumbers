@@ -1,13 +1,13 @@
 ﻿namespace SerialNumbers
 {
-    public interface ISerialNumberSchemaProvider
+    internal interface ISerialNumberSchemaProvider
     {
-        ISerialNumberSchema Create(string schemaId, string customerId, string mask, int seed = 0, int increment = 1);
+        ISerialNumberSchema Create(string schema, string customer, string mask, int seed = 0, int increment = 1);
 
-        void Delete(string schemaId);
+        void Delete(string schema, string customer);
 
-        ISerialNumberSchema Get(string schemaId);
+        ISerialNumberSchema Get(string schema, string customer);
 
-        ISerialNumberSchema Update(string schemaId, string mask, int seed, int increment);
+        ISerialNumberSchema Update(string schema, string customer, string mask, int seed, int increment);
     }
 }

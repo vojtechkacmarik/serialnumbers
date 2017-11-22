@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SerialNumbers.Entity
 {
-    internal class Customer : EntityBase
+    internal class Subject : EntityBase
     {
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
 
-        public List<Schema> Schemas { get; set; }
+        public List<SchemaValue> SchemaValues { get; set; }
     }
 }

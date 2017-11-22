@@ -1,20 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SerialNumbers.Entity
 {
-    internal class Schema : IEntity
+    internal class Schema : EntityBase
     {
-        [Key]
-        public int Id { get; set; }
+        [ForeignKey(nameof(CustomerId))]
+        public Customer Customer { get; set; }
+
+        [Required]
+        public int CustomerId { get; set; }
 
         [Required]
         [StringLength(255)]
-        public string Key { get; set; }
+        public string Name { get; set; }
 
-        public int CustomerId { get; set; }
-
-        [ForeignKey("CustomerId")]
-        public Customer Customer { get; set; }
+        public List<SchemaDefinition> SchemaDefinitions { get; set; }
     }
 }

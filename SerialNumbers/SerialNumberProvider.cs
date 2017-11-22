@@ -4,17 +4,17 @@ namespace SerialNumbers
 {
     internal class SerialNumberProvider : ISerialNumberProvider
     {
-        public string GetLastSerialNumber(string schemaId)
+        public string Current(string schema, string customer, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-        public string GetNextSerialNumber(string schemaId, params object[] args)
+        public string Next(string schema, string customer, params object[] args)
         {
             throw new NotImplementedException();
         }
 
-        public void Reset(string schemaId)
+        public void Reset(string schema, string customer)
         {
             throw new NotImplementedException();
         }
