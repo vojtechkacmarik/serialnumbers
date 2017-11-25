@@ -17,7 +17,7 @@ namespace SerialNumbers.EntityFramework
 
         /// <summary>
         /// Gets or sets the schema definitions.
-        /// </summary
+        /// </summary>
         public DbSet<SchemaDefinition> SchemaDefinitions { get; set; }
 
         /// <summary>

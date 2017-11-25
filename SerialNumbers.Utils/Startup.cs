@@ -10,8 +10,6 @@ namespace SerialNumbers.Utils
 {
     public class Startup
     {
-        private IConfigurationRoot Configuration { get; }
-
         public Startup()
         {
             var builder = new ConfigurationBuilder()
@@ -21,19 +19,43 @@ namespace SerialNumbers.Utils
             Configuration = builder.Build();
         }
 
+        private IConfigurationRoot Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(new LoggerFactory()
+            AddLogging(services);
+            AddConfiguration(services);
+            AddSerialNumbers(services);
+            AddSerialNumbersCommands(services);
+            services.AddSingleton<ISerialNumbersCommandLineApplication, SerialNumbersCommandLineApplication>();
+        }
+
+        private static void AddSerialNumbersCommands(IServiceCollection services)
+        {
+            services.AddSingleton<ICommand, CreateCommand>();
+        }
+
+        private static void AddLogging(IServiceCollection services)
+        {
+            var loggerFactory = new LoggerFactory()
                 .AddConsole(LogLevel.Debug)
                 .AddSerilog()
-                .AddDebug());
+                .AddDebug();
 
+            services.AddSingleton(loggerFactory);
             services.AddLogging();
+        }
+
+        private void AddConfiguration(IServiceCollection services)
+        {
             services.AddSingleton<IConfiguration>(Configuration);
+            services.AddSingleton(Configuration);
+        }
+
+        private void AddSerialNumbers(IServiceCollection services)
+        {
             services.AddSerialNumbers(Configuration.GetConnectionString(SerialNumberConstants.SERIAL_NUMBERS_CONNECTION));
             services.AddSerialNumbersLocalDateTimeProvider();
-            services.AddSingleton<ICommand, CreateCommand>();
-            services.AddSingleton<ISerialNumbersCommandLineApplication, SerialNumbersCommandLineApplication>();
         }
     }
 }

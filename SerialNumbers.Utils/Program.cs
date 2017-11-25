@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SerialNumbers.Extensions;
 
 namespace SerialNumbers.Utils
 {
@@ -12,6 +13,7 @@ namespace SerialNumbers.Utils
             startup.ConfigureServices(services);
 
             var serviceProvider = services.BuildServiceProvider();
+            serviceProvider.BuildDatabase();
 
             var app = serviceProvider.GetService<ISerialNumbersCommandLineApplication>();
             return app.Execute(args);

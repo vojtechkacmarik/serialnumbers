@@ -1,7 +1,12 @@
-hangfire - konfigurace, migrace, 
+DB - konfigurace, 
 - UseSqlServer, atd. UseSqlLite, tj ruzne implementace - options
-zapis do db, 
-- DI container, typed factory - castle, autofac
--- scoped instance, IServiceScopeFactory, per component ISerialNumbersProvider (nejaky jiny root, ktery v sobe ziska pres factory )
-- UTs
-nuget publish - version, pack, assembly info
+
+UTs
+-- Autofixture, Automocker, StructureMap.AutoMocking
+-- Moq
+
+nuget publish - version, pack, assembly info, artifacts
+- nuget power tools
+
+Unused references
+CommandLineApplication - McMaster fork - for attribute based Command definition

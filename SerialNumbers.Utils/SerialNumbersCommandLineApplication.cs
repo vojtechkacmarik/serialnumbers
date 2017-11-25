@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SerialNumbers.Extensions;
 using SerialNumbers.Utils.Commands;
 
 namespace SerialNumbers.Utils
@@ -9,12 +12,11 @@ namespace SerialNumbers.Utils
     public class SerialNumbersCommandLineApplication : CommandLineApplication, ISerialNumbersCommandLineApplication
     {
         private readonly ILogger<SerialNumbersCommandLineApplication> _logger;
-        private readonly IServiceProvider _serviceProvider;
 
         public SerialNumbersCommandLineApplication(IServiceProvider serviceProvider, ILogger<SerialNumbersCommandLineApplication> logger)
         {
+            if (serviceProvider == null) throw new ArgumentNullException(nameof(serviceProvider));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
 
             Name = "SerialNumbers.Utils";
             FullName = "Serial Numbers - Command Line Tool";
@@ -33,18 +35,31 @@ namespace SerialNumbers.Utils
             return 0;
         }
 
+        private static IServiceScopeFactory GetServiceScopeFactory(IServiceProvider serviceProvider)
+        {
+            return serviceProvider.GetRequiredService<IServiceScopeFactory>();
+        }
+
+        private static IEnumerable<CommandLineApplication> GetSuitableCommands(IServiceScope serviceScope)
+        {
+            return serviceScope.ServiceProvider.GetServices<ICommand>()
+                .OfType<CommandLineApplication>()
+                .ToArray();
+        }
+
+        private void AddCommand(CommandLineApplication command)
+        {
+            Commands.Add(command);
+            _logger.LogInformation($"Command '{command.Name}' was registered successfully.");
+        }
+
         private void RegisterCommands(IServiceProvider serviceProvider)
         {
-            var serviceScopeFactory = serviceProvider.GetRequiredService<IServiceScopeFactory>();
-            using (var scope = serviceScopeFactory.CreateScope())
+            var serviceScopeFactory = GetServiceScopeFactory(serviceProvider);
+            using (var serviceScope = serviceScopeFactory.CreateScope())
             {
-                foreach (var command in scope.ServiceProvider.GetServices<ICommand>())
-                {
-                    if (!(command is CommandLineApplication commandLineApp)) continue;
-
-                    Commands.Add(commandLineApp);
-                    _logger.LogInformation($"Command {commandLineApp.Name} was registered.");
-                }
+                var suitableCommands = GetSuitableCommands(serviceScope);
+                suitableCommands.ForEach(AddCommand);
             }
         }
     }
