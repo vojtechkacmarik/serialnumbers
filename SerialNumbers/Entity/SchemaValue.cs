@@ -5,6 +5,12 @@ namespace SerialNumbers.Entity
 {
     internal class SchemaValue : EntityBase
     {
+        [ForeignKey(nameof(SchemaDefinitionId))]
+        public SchemaDefinition SchemaDefinition { get; set; }
+
+        [Required]
+        public int SchemaDefinitionId { get; set; }
+
         [ForeignKey(nameof(SubjectId))]
         public Subject Subject { get; set; }
 

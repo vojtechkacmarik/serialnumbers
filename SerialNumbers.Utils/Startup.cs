@@ -33,6 +33,9 @@ namespace SerialNumbers.Utils
         private static void AddSerialNumbersCommands(IServiceCollection services)
         {
             services.AddSingleton<ICommand, CreateCommand>();
+            services.AddSingleton<ICommand, UpdateCommand>();
+            services.AddSingleton<ICommand, DeleteCommand>();
+            services.AddSingleton<ICommand, GetCommand>();
         }
 
         private static void AddLogging(IServiceCollection services)

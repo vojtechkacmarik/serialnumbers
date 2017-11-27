@@ -53,6 +53,10 @@ namespace SerialNumbers.EntityFramework
             builder.Entity<Schema>()
                 .HasIndex(p => new { p.Name, p.CustomerId })
                 .IsUnique();
+
+            builder.Entity<SchemaValue>()
+                .HasIndex(p => new { p.SchemaDefinitionId, p.SubjectId, p.Value })
+                .IsUnique();
         }
     }
 }

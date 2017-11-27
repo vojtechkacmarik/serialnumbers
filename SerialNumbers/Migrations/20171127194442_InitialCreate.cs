@@ -63,28 +63,6 @@ namespace SerialNumbers.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SchemaValues",
-                schema: "sn",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SubjectId = table.Column<int>(nullable: false),
-                    Value = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SchemaValues", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SchemaValues_Subjects_SubjectId",
-                        column: x => x.SubjectId,
-                        principalSchema: "sn",
-                        principalTable: "Subjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SchemaDefinitions",
                 schema: "sn",
                 columns: table => new
@@ -105,6 +83,36 @@ namespace SerialNumbers.Migrations
                         column: x => x.SchemaId,
                         principalSchema: "sn",
                         principalTable: "Schemas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SchemaValues",
+                schema: "sn",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SchemaDefinitionId = table.Column<int>(nullable: false),
+                    SubjectId = table.Column<int>(nullable: false),
+                    Value = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SchemaValues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SchemaValues_SchemaDefinitions_SchemaDefinitionId",
+                        column: x => x.SchemaDefinitionId,
+                        principalSchema: "sn",
+                        principalTable: "SchemaDefinitions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SchemaValues_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalSchema: "sn",
+                        principalTable: "Subjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -142,6 +150,13 @@ namespace SerialNumbers.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SchemaValues_SchemaDefinitionId_SubjectId_Value",
+                schema: "sn",
+                table: "SchemaValues",
+                columns: new[] { "SchemaDefinitionId", "SubjectId", "Value" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Subjects_Name",
                 schema: "sn",
                 table: "Subjects",
@@ -152,19 +167,19 @@ namespace SerialNumbers.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SchemaDefinitions",
-                schema: "sn");
-
-            migrationBuilder.DropTable(
                 name: "SchemaValues",
                 schema: "sn");
 
             migrationBuilder.DropTable(
-                name: "Schemas",
+                name: "SchemaDefinitions",
                 schema: "sn");
 
             migrationBuilder.DropTable(
                 name: "Subjects",
+                schema: "sn");
+
+            migrationBuilder.DropTable(
+                name: "Schemas",
                 schema: "sn");
 
             migrationBuilder.DropTable(

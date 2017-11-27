@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,6 +7,11 @@ namespace SerialNumbers.Entity
 {
     internal class SchemaDefinition : EntityBase
     {
+        public SchemaDefinition()
+        {
+            Values = new List<SchemaValue>();
+        }
+
         public DateTime CreatedAt { get; set; }
 
         [Required]
@@ -23,5 +29,7 @@ namespace SerialNumbers.Entity
 
         [Required]
         public int Seed { get; set; }
+
+        public ICollection<SchemaValue> Values { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using SerialNumbers.Entity;
 using SerialNumbers.Repository;
 
 namespace SerialNumbers
@@ -25,25 +26,45 @@ namespace SerialNumbers
         {
             var customerEntity = _customerRepository.GetOrAdd(customer);
             var schemaEntity = _schemaRepository.AddOrThrowIfExists(schema, customerEntity);
-            var schemaDefinition = _schemaDefinitionRepository.Add(mask, seed, increment, schemaEntity);
+            var schemaDefinitionEntity = _schemaDefinitionRepository.Add(mask, seed, increment, schemaEntity);
             _schemaDefinitionRepository.SaveChanges();
 
-            return _serialNumberSchemaFactory.Create(schema, customer, mask, seed, increment, schemaDefinition.CreatedAt);
+            return _serialNumberSchemaFactory.Create(schemaEntity.Name, customerEntity.Name, mask, seed, increment, schemaDefinitionEntity.CreatedAt);
         }
 
         public void Delete(string schema, string customer)
         {
-            throw new NotImplementedException();
+            _schemaRepository.Delete(schema, customer);
+            _schemaRepository.SaveChanges();
         }
 
         public ISerialNumberSchema Get(string schema, string customer)
         {
-            throw new NotImplementedException();
+            var schemaEntity = _schemaRepository.Get(schema, customer);
+            return schemaEntity != null
+                ? _serialNumberSchemaFactory.Create(schemaEntity.Name,
+                    schemaEntity.Customer.Name,
+                    schemaEntity.CurrentSchemaDefinition.Mask,
+                    schemaEntity.CurrentSchemaDefinition.Seed,
+                    schemaEntity.CurrentSchemaDefinition.Increment,
+                    schemaEntity.CurrentSchemaDefinition.CreatedAt)
+                : null;
         }
 
         public ISerialNumberSchema Update(string schema, string customer, string mask, int seed, int increment)
         {
-            throw new NotImplementedException();
+            var schemaEntity = _schemaRepository.Get(schema, customer);
+            if (schemaEntity == null) throw new InvalidOperationException($"Cannot update entity {nameof(Schema)} (Schema='{schema}', Customer='{customer}'). Entity doesn't exist!");
+
+            var schemaDefinitionEntity = _schemaDefinitionRepository.Add(mask, seed, increment, schemaEntity);
+            _schemaDefinitionRepository.SaveChanges();
+
+            return _serialNumberSchemaFactory.Create(schemaEntity.Name,
+                schemaEntity.Customer.Name,
+                schemaDefinitionEntity.Mask,
+                schemaDefinitionEntity.Seed,
+                schemaDefinitionEntity.Increment,
+                schemaDefinitionEntity.CreatedAt);
         }
     }
 }

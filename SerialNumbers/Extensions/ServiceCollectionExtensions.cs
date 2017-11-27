@@ -8,6 +8,11 @@ namespace SerialNumbers.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Adds the serial numbers components into services which are managed by DI container.
+        /// </summary>
+        /// <param name="services">The services.</param>
+        /// <param name="connectionString">The connection string (optional).</param>
         public static void AddSerialNumbers(this IServiceCollection services, string connectionString)
         {
             var internalConnectionString = connectionString ?? SerialNumberConstants.SERIAL_NUMBERS_CONNECTION;
@@ -27,11 +32,19 @@ namespace SerialNumbers.Extensions
             services.AddSingleton<ISerialNumberSchemaDefinitionFactory, SerialNumberSchemaDefinitionFactory>();
         }
 
+        /// <summary>
+        /// Adds the serial numbers UTC date time provider.
+        /// </summary>
+        /// <param name="services">The services.</param>
         public static void AddSerialNumbersUtcDateTimeProvider(this IServiceCollection services)
         {
             services.AddSingleton<ISerialNumberDateTimeProvider, UtcDateTimeProvider>();
         }
 
+        /// <summary>
+        /// Adds the serial numbers local date time provider.
+        /// </summary>
+        /// <param name="services">The services.</param>
         public static void AddSerialNumbersLocalDateTimeProvider(this IServiceCollection services)
         {
             services.AddSingleton<ISerialNumberDateTimeProvider, LocalDateTimeProvider>();
