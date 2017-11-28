@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialNumbers", "SerialNumbers\SerialNumbers.csproj", "{559C2EF1-921A-47F4-9270-7809E010D24F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SerialNumbers", "SerialNumbers\SerialNumbers.csproj", "{559C2EF1-921A-47F4-9270-7809E010D24F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{88D830CD-CBD7-4D22-9684-259462D5D650}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SerialNumbers.Utils", "SerialNumbers.Utils\SerialNumbers.Utils.csproj", "{F8A3C8E4-A3BE-4F54-88F1-0DD1F78B78A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.SerialNumbers", "Tests.SerialNumbers\Tests.SerialNumbers.csproj", "{413E65F3-5DB9-478F-9CEE-759EE021E6E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.SerialNumbers", "Tests.SerialNumbers\Tests.SerialNumbers.csproj", "{413E65F3-5DB9-478F-9CEE-759EE021E6E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

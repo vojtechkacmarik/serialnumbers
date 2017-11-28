@@ -35,6 +35,14 @@ namespace SerialNumbers.Repository
             return newSchema;
         }
 
+        public Schema AssertExists(string schema, string customer)
+        {
+            var existingEntity = Get(schema, customer);
+            if (existingEntity != null) return existingEntity;
+
+            throw new InvalidOperationException($"The {nameof(Schema)} (Schema={schema}, Customer={customer}) doesn't exist!");
+        }
+
         public void Delete(string schema, string customer)
         {
             if (schema == null) throw new ArgumentNullException(nameof(schema));

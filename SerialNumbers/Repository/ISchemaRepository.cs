@@ -7,6 +7,8 @@ namespace SerialNumbers.Repository
     {
         Schema AddOrThrowIfExists(string schema, Customer customer);
 
+        Schema AssertExists(string schema, string customer);
+
         void Delete(string schema, string customer);
 
         Schema Get(string schema, string customer);

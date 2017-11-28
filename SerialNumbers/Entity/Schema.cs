@@ -13,10 +13,9 @@ namespace SerialNumbers.Entity
         }
 
         [NotMapped]
-        public SchemaDefinition CurrentSchemaDefinition =>
-            SchemaDefinitions?
-                .OrderByDescending(schemaDefinition => schemaDefinition.Id)
-                .First();
+        public SchemaDefinition CurrentSchemaDefinition => SchemaDefinitions
+            .OrderByDescending(schemaDefinition => schemaDefinition.Id)
+            .First();
 
         [ForeignKey(nameof(CustomerId))]
         public Customer Customer { get; set; }

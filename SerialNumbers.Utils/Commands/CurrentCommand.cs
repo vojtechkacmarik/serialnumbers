@@ -22,16 +22,18 @@ namespace SerialNumbers.Utils.Commands
 
             var schema = Argument("schema", "Unique name of the schema");
             var customer = Argument("customer", "Unique name of the customer");
+            var subject = Argument("subject", "Unique name of the subject for the serial numbers schema");
             var arguments = Option("-a |--arguments <arguments>", "(optional) Arguments.", CommandOptionType.MultipleValue);
 
-            OnExecute(() => Execute(schema, customer, arguments));
+            OnExecute(() => Execute(schema, customer, subject, arguments));
         }
 
-        public int Execute(CommandArgument schema, CommandArgument customer, CommandOption arguments)
+        public int Execute(CommandArgument schema, CommandArgument customer, CommandArgument subject, CommandOption arguments)
         {
             var argumentsAsString = string.Join(",", arguments.Values);
-            _logger.LogInformation($"Current schema value with following parameters will be obtained: Schema={schema.Value}, Customer={customer.Value}, Arguments={argumentsAsString}");
-            var result = _serialNumberService.Current(schema.Value, customer.Value, arguments);
+            var args = arguments.Values.ToArray();
+            _logger.LogInformation($"Current schema value with following parameters will be obtained: Schema={schema.Value}, Customer={customer.Value}, Subject={subject.Value}, Arguments={argumentsAsString}");
+            var result = _serialNumberService.Current(schema.Value, customer.Value, subject.Value, args);
             _logger.LogInformation($"Current schema '{schema.Value}' value was obtained: {result}");
 
             return 0;

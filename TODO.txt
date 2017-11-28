@@ -1,6 +1,13 @@
-Impl commands: - current, next, reset
+-- asserts in business components - Assertion component
+-- refactor in Repository - DbContext, DbSet - use interface ? for mocking
+-- business - remove duplicity
+-- validators + UTs
 
-base Command
+Contracts - separate into own csproj SerialNumbers.Contracts
+
+Unit of Work - implement on business component instead of Repository layer
+
+base Command class
 
 UTs
 -- Autofixture, Automocker, StructureMap.AutoMocking

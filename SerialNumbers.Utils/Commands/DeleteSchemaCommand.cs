@@ -5,17 +5,17 @@ using SerialNumbers.Business;
 
 namespace SerialNumbers.Utils.Commands
 {
-    internal class DeleteCommand : CommandLineApplication, ICommand
+    internal class DeleteSchemaCommand : CommandLineApplication, ICommand
     {
-        private readonly ILogger<DeleteCommand> _logger;
+        private readonly ILogger<DeleteSchemaCommand> _logger;
         private readonly ISerialNumberService _serialNumberService;
 
-        public DeleteCommand(ILogger<DeleteCommand> logger, ISerialNumberService serialNumberService)
+        public DeleteSchemaCommand(ILogger<DeleteSchemaCommand> logger, ISerialNumberService serialNumberService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _serialNumberService = serialNumberService ?? throw new ArgumentNullException(nameof(serialNumberService));
 
-            Name = "delete";
+            Name = "delete-schema";
             FullName = Description = "Command to delete the schema.";
 
             HelpOption("-? | --help | -h");

@@ -30,7 +30,7 @@ namespace SerialNumbers.Utils
         public void ConfigureServices(IServiceCollection services)
         {
             AddConfiguration(services, Configuration);
-            AddLogging(services);
+            AddLogging(services, Configuration);
             AddSerialNumbers(services, Configuration.GetConnectionString(SerialNumberConstants.SERIAL_NUMBERS_CONNECTION));
             AddSerialNumbersCommands(services);
             AddSerialNumbersCommandLineApplication(services);
@@ -42,10 +42,10 @@ namespace SerialNumbers.Utils
             services.AddSingleton(configuration);
         }
 
-        private static void AddLogging(IServiceCollection services)
+        private static void AddLogging(IServiceCollection services, IConfiguration configuration)
         {
             var loggerFactory = new LoggerFactory()
-                .AddConsole(LogLevel.Debug)
+                .AddConsole(configuration)
                 .AddSerilog();
 
             services.AddSingleton(loggerFactory);

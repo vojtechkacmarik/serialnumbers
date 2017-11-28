@@ -5,18 +5,18 @@ using SerialNumbers.Business;
 
 namespace SerialNumbers.Utils.Commands
 {
-    internal class UpdateCommand : CommandLineApplication, ICommand
+    internal class CreateSchemaCommand : CommandLineApplication, ICommand
     {
-        private readonly ILogger<UpdateCommand> _logger;
+        private readonly ILogger<CreateSchemaCommand> _logger;
         private readonly ISerialNumberService _serialNumberService;
 
-        public UpdateCommand(ILogger<UpdateCommand> logger, ISerialNumberService serialNumberService)
+        public CreateSchemaCommand(ILogger<CreateSchemaCommand> logger, ISerialNumberService serialNumberService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _serialNumberService = serialNumberService ?? throw new ArgumentNullException(nameof(serialNumberService));
 
-            Name = "update";
-            FullName = Description = "Command to update the schema by the schema definition.";
+            Name = "create-schema";
+            FullName = Description = "Command to create a schema.";
 
             HelpOption("-? | --help | -h");
 
@@ -34,9 +34,9 @@ namespace SerialNumbers.Utils.Commands
             var seedAsInt = seed.HasValue() ? ConvertToInt32(seed.Value()) : 0;
             var incrementAsInt = increment.HasValue() ? ConvertToInt32(increment.Value()) : 1;
 
-            _logger.LogInformation($"Schema with following parameters will be updated: Schema={schema.Value}, Customer={customer.Value}, Mask={mask.Value}, Seed={seedAsInt}, Increment={incrementAsInt}");
-            var result = _serialNumberService.UpdateSchema(schema.Value, customer.Value, mask.Value, seedAsInt, incrementAsInt);
-            _logger.LogInformation($"Schema '{result.Schema}' was updated.");
+            _logger.LogInformation($"Schema with following parameters will be created: Schema={schema.Value}, Customer={customer.Value}, Mask={mask.Value}, Seed={seedAsInt}, Increment={incrementAsInt}");
+            var result = _serialNumberService.CreateSchema(schema.Value, customer.Value, mask.Value, seedAsInt, incrementAsInt);
+            _logger.LogInformation($"Schema '{result.Schema}' was created.");
 
             return 0;
         }

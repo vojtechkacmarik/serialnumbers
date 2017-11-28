@@ -5,17 +5,17 @@ using SerialNumbers.Business;
 
 namespace SerialNumbers.Utils.Commands
 {
-    internal class GetCommand : CommandLineApplication, ICommand
+    internal class GetSchemaCommand : CommandLineApplication, ICommand
     {
-        private readonly ILogger<GetCommand> _logger;
+        private readonly ILogger<GetSchemaCommand> _logger;
         private readonly ISerialNumberService _serialNumber;
 
-        public GetCommand(ILogger<GetCommand> logger, ISerialNumberService serialNumberService)
+        public GetSchemaCommand(ILogger<GetSchemaCommand> logger, ISerialNumberService serialNumberService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _serialNumber = serialNumberService ?? throw new ArgumentNullException(nameof(serialNumberService));
 
-            Name = "get";
+            Name = "get-schema";
             FullName = Description = "Command to get the schema.";
 
             HelpOption("-? | --help | -h");

@@ -2,10 +2,10 @@
 {
     internal interface ISerialNumberProvider
     {
-        string Current(string schema, string customer, params object[] args);
+        string Current(string schema, string customer, string subject, params string[] args);
 
-        string Next(string schema, string customer, params object[] args);
+        string Next(string schema, string customer, string subject, params string[] args);
 
-        void Reset(string schema, string customer);
+        void Reset(string schema, string customer, string subject);
     }
 }

@@ -6,16 +6,19 @@ namespace SerialNumbers.Business
 {
     internal class SerialNumberSchemaProvider : ISerialNumberSchemaProvider
     {
-        private readonly ISerialNumberSchemaFactory _serialNumberSchemaFactory;
+        private readonly ISerialNumberSchemaDefinitionValidator _serialNumberSchemaDefinitionValidator;
+        private readonly ICustomerRepository _customerRepository;
         private readonly ISchemaDefinitionRepository _schemaDefinitionRepository;
         private readonly ISchemaRepository _schemaRepository;
-        private readonly ICustomerRepository _customerRepository;
+        private readonly ISerialNumberSchemaFactory _serialNumberSchemaFactory;
 
         public SerialNumberSchemaProvider(ICustomerRepository customerRepository,
             ISchemaRepository schemaRepository,
             ISchemaDefinitionRepository schemaDefinitionRepository,
-            ISerialNumberSchemaFactory serialNumberSchemaFactory)
+            ISerialNumberSchemaFactory serialNumberSchemaFactory,
+            ISerialNumberSchemaDefinitionValidator serialNumberSchemaDefinitionValidator)
         {
+            _serialNumberSchemaDefinitionValidator = serialNumberSchemaDefinitionValidator ?? throw new ArgumentNullException(nameof(serialNumberSchemaDefinitionValidator));
             _serialNumberSchemaFactory = serialNumberSchemaFactory ?? throw new ArgumentNullException(nameof(serialNumberSchemaFactory));
             _schemaDefinitionRepository = schemaDefinitionRepository ?? throw new ArgumentNullException(nameof(schemaDefinitionRepository));
             _schemaRepository = schemaRepository ?? throw new ArgumentNullException(nameof(schemaRepository));
@@ -24,6 +27,8 @@ namespace SerialNumbers.Business
 
         public ISerialNumberSchema Create(string schema, string customer, string mask, int seed = 0, int increment = 1)
         {
+            Validate(mask, seed, increment);
+
             var customerEntity = _customerRepository.GetOrAdd(customer);
             var schemaEntity = _schemaRepository.AddOrThrowIfExists(schema, customerEntity);
             var schemaDefinitionEntity = _schemaDefinitionRepository.Add(mask, seed, increment, schemaEntity);
@@ -42,29 +47,35 @@ namespace SerialNumbers.Business
         {
             var schemaEntity = _schemaRepository.Get(schema, customer);
             return schemaEntity != null
-                ? _serialNumberSchemaFactory.Create(schemaEntity.Name,
-                    schemaEntity.Customer.Name,
-                    schemaEntity.CurrentSchemaDefinition.Mask,
-                    schemaEntity.CurrentSchemaDefinition.Seed,
-                    schemaEntity.CurrentSchemaDefinition.Increment,
-                    schemaEntity.CurrentSchemaDefinition.CreatedAt)
+                ? CreateSchema(schemaEntity.Name, schemaEntity.Customer.Name, schemaEntity.CurrentSchemaDefinition)
                 : null;
         }
 
         public ISerialNumberSchema Update(string schema, string customer, string mask, int seed, int increment)
         {
-            var schemaEntity = _schemaRepository.Get(schema, customer);
-            if (schemaEntity == null) throw new InvalidOperationException($"Cannot update entity {nameof(Schema)} (Schema='{schema}', Customer='{customer}'). Entity doesn't exist!");
+            Validate(mask, seed, increment);
 
+            var schemaEntity = _schemaRepository.AssertExists(schema, customer);
             var schemaDefinitionEntity = _schemaDefinitionRepository.Add(mask, seed, increment, schemaEntity);
             _schemaDefinitionRepository.SaveChanges();
 
-            return _serialNumberSchemaFactory.Create(schemaEntity.Name,
-                schemaEntity.Customer.Name,
-                schemaDefinitionEntity.Mask,
-                schemaDefinitionEntity.Seed,
-                schemaDefinitionEntity.Increment,
-                schemaDefinitionEntity.CreatedAt);
+            return CreateSchema(schemaEntity.Name, schemaEntity.Customer.Name, schemaDefinitionEntity);
+        }
+
+        private void Validate(string mask, int seed, int increment)
+        {
+            var isValid = _serialNumberSchemaDefinitionValidator.IsValid(mask, seed, increment);
+            if (!isValid) throw new InvalidOperationException("Schema definition is not valid.");
+        }
+
+        private ISerialNumberSchema CreateSchema(string schema, string customer, SchemaDefinition schemaDefinition)
+        {
+            return _serialNumberSchemaFactory.Create(schema,
+                customer,
+                schemaDefinition.Mask,
+                schemaDefinition.Seed,
+                schemaDefinition.Increment,
+                schemaDefinition.CreatedAt);
         }
     }
 }

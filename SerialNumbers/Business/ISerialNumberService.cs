@@ -21,9 +21,10 @@
         /// </summary>
         /// <param name="schema">The schema.</param>
         /// <param name="customer">The customer.</param>
+        /// <param name="subject">The subject.</param>
         /// <param name="args">The optional arguments.</param>
         /// <returns>The current schema value.</returns>
-        string Current(string schema, string customer, params object[] args);
+        string Current(string schema, string customer, string subject, params string[] args);
 
         /// <summary>
         /// Deletes the schema.
@@ -45,16 +46,18 @@
         /// </summary>
         /// <param name="schema">The schema.</param>
         /// <param name="customer">The customer.</param>
+        /// <param name="subject">The subject.</param>
         /// <param name="args">The optional arguments.</param>
         /// <returns>The next schema value.</returns>
-        string Next(string schema, string customer, params object[] args);
+        string Next(string schema, string customer, string subject, params string[] args);
 
         /// <summary>
         /// Resets the specified schema.
         /// </summary>
         /// <param name="schema">The schema.</param>
         /// <param name="customer">The customer.</param>
-        void Reset(string schema, string customer);
+        /// <param name="subject">The subject.</param>
+        void Reset(string schema, string customer, string subject);
 
         /// <summary>
         /// Updates the schema.

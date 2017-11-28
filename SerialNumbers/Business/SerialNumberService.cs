@@ -32,12 +32,12 @@ namespace SerialNumbers.Business
         }
 
         /// <inheritdoc />
-        public string Current(string schema, string customer, params object[] args)
+        public string Current(string schema, string customer, string subject, params string[] args)
         {
             if (schema == null) throw new ArgumentNullException(nameof(schema));
             if (customer == null) throw new ArgumentNullException(nameof(customer));
 
-            return _serialNumberProvider.Current(schema, customer, args);
+            return _serialNumberProvider.Current(schema, customer, subject, args);
         }
 
         /// <inheritdoc />
@@ -60,21 +60,21 @@ namespace SerialNumbers.Business
         }
 
         /// <inheritdoc />
-        public string Next(string schema, string customer, params object[] args)
+        public string Next(string schema, string customer, string subject, params string[] args)
         {
             if (schema == null) throw new ArgumentNullException(nameof(schema));
             if (customer == null) throw new ArgumentNullException(nameof(customer));
 
-            return _serialNumberProvider.Next(schema, customer, args);
+            return _serialNumberProvider.Next(schema, customer, subject, args);
         }
 
         /// <inheritdoc />
-        public void Reset(string schema, string customer)
+        public void Reset(string schema, string customer, string subject)
         {
             if (schema == null) throw new ArgumentNullException(nameof(schema));
             if (customer == null) throw new ArgumentNullException(nameof(customer));
 
-            _serialNumberProvider.Reset(schema, customer);
+            _serialNumberProvider.Reset(schema, customer, subject);
         }
 
         /// <inheritdoc />

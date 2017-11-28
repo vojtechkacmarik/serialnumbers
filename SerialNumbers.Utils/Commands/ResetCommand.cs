@@ -22,14 +22,15 @@ namespace SerialNumbers.Utils.Commands
 
             var schema = Argument("schema", "Unique name of the schema");
             var customer = Argument("customer", "Unique name of the customer");
+            var subject = Argument("subject", "Unique name of the subject for the serial numbers schema");
 
-            OnExecute(() => Execute(schema, customer));
+            OnExecute(() => Execute(schema, customer, subject));
         }
 
-        public int Execute(CommandArgument schema, CommandArgument customer)
+        public int Execute(CommandArgument schema, CommandArgument customer, CommandArgument subject)
         {
-            _logger.LogInformation($"Schema value with the following parameters will be deleted: Schema={schema.Value}, Customer={customer.Value}");
-            _serialNumberService.Reset(schema.Value, customer.Value);
+            _logger.LogInformation($"Schema value with the following parameters will be deleted: Schema={schema.Value}, Customer={customer.Value}, Subject={subject.Value}");
+            _serialNumberService.Reset(schema.Value, customer.Value, subject.Value);
             _logger.LogInformation($"Schema '{schema.Value}' value was deleted.");
 
             return 0;

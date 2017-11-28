@@ -46,6 +46,13 @@ namespace SerialNumbers.Extensions
             services.AddScoped<ISerialNumberService, SerialNumberService>();
             services.AddScoped<ISerialNumberSchemaProvider, SerialNumberSchemaProvider>();
             services.AddScoped<ISerialNumberProvider, SerialNumberProvider>();
+            services.AddSingleton<ISerialNumberSchemaValueFormatter, SerialNumberSchemaValueFormatter>();
+            services.AddSingleton<ISerialNumberSchemaValueValidator, SerialNumberSchemaValueValidator>();
+            services.AddSingleton<ISerialNumberSchemaValueProvider, SerialNumberSchemaValueProvider>();
+            services.AddSingleton<ISerialNumberSchemaValueStrategy, SerialNumberInitialSchemaValueStrategy>();
+            services.AddSingleton<ISerialNumberSchemaValueStrategy, SerialNumberAscendingSchemaValueStrategy>();
+            services.AddSingleton<ISerialNumberSchemaValueStrategy, SerialNumberDescendingSchemaValueStrategy>();
+            services.AddSingleton<ISerialNumberSchemaDefinitionValidator, SerialNumberSchemaDefinitionValidator>();
         }
 
         /// <summary>
