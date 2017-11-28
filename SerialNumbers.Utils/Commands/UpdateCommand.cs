@@ -1,19 +1,19 @@
 ﻿using System;
 using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
+using SerialNumbers.Business;
 
 namespace SerialNumbers.Utils.Commands
 {
     internal class UpdateCommand : CommandLineApplication, ICommand
     {
         private readonly ILogger<UpdateCommand> _logger;
-        private readonly ISerialNumberService _serialNumberSchemaProvider;
+        private readonly ISerialNumberService _serialNumberService;
 
         public UpdateCommand(ILogger<UpdateCommand> logger, ISerialNumberService serialNumberService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _serialNumberSchemaProvider = serialNumberService ??
-                                          throw new ArgumentNullException(nameof(serialNumberService));
+            _serialNumberService = serialNumberService ?? throw new ArgumentNullException(nameof(serialNumberService));
 
             Name = "update";
             FullName = Description = "Command to update the schema by the schema definition.";
@@ -35,7 +35,7 @@ namespace SerialNumbers.Utils.Commands
             var incrementAsInt = increment.HasValue() ? ConvertToInt32(increment.Value()) : 1;
 
             _logger.LogInformation($"Schema with following parameters will be updated: Schema={schema.Value}, Customer={customer.Value}, Mask={mask.Value}, Seed={seedAsInt}, Increment={incrementAsInt}");
-            var result = _serialNumberSchemaProvider.UpdateSchema(schema.Value, customer.Value, mask.Value, seedAsInt, incrementAsInt);
+            var result = _serialNumberService.UpdateSchema(schema.Value, customer.Value, mask.Value, seedAsInt, incrementAsInt);
             _logger.LogInformation($"Schema '{result.Schema}' was updated.");
 
             return 0;

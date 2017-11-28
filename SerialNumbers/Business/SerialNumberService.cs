@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 
-namespace SerialNumbers
+namespace SerialNumbers.Business
 {
     /// <inheritdoc />
     internal class SerialNumberService : ISerialNumberService

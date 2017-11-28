@@ -1,12 +1,15 @@
-DB - konfigurace, 
-- UseSqlServer, atd. UseSqlLite, tj ruzne implementace - options
+Impl commands: - current, next, reset
+
+base Command
 
 UTs
 -- Autofixture, Automocker, StructureMap.AutoMocking
 -- Moq
+-- create some UTs
 
 nuget publish - version, pack, assembly info, artifacts
 - nuget power tools
 
-Unused references
-CommandLineApplication - McMaster fork - for attribute based Command definition
+update README.md
+- add usage examples 
+- add startup (initialization) command for end application 

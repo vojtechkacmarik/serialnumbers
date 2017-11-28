@@ -1,4 +1,4 @@
-﻿namespace SerialNumbers
+﻿namespace SerialNumbers.Business
 {
     /// <summary>
     /// Provides public API to manage serial numbers.

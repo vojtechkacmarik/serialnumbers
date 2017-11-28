@@ -1,19 +1,19 @@
 ﻿using System;
 using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
+using SerialNumbers.Business;
 
 namespace SerialNumbers.Utils.Commands
 {
     internal class CreateCommand : CommandLineApplication, ICommand
     {
         private readonly ILogger<CreateCommand> _logger;
-        private readonly ISerialNumberService _serialNumberSchemaProvider;
+        private readonly ISerialNumberService _serialNumberService;
 
         public CreateCommand(ILogger<CreateCommand> logger, ISerialNumberService serialNumberService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _serialNumberSchemaProvider = serialNumberService ??
-                                          throw new ArgumentNullException(nameof(serialNumberService));
+            _serialNumberService = serialNumberService ?? throw new ArgumentNullException(nameof(serialNumberService));
 
             Name = "create";
             FullName = Description = "Command to create a schema.";
@@ -35,7 +35,7 @@ namespace SerialNumbers.Utils.Commands
             var incrementAsInt = increment.HasValue() ? ConvertToInt32(increment.Value()) : 1;
 
             _logger.LogInformation($"Schema with following parameters will be created: Schema={schema.Value}, Customer={customer.Value}, Mask={mask.Value}, Seed={seedAsInt}, Increment={incrementAsInt}");
-            var result = _serialNumberSchemaProvider.CreateSchema(schema.Value, customer.Value, mask.Value, seedAsInt, incrementAsInt);
+            var result = _serialNumberService.CreateSchema(schema.Value, customer.Value, mask.Value, seedAsInt, incrementAsInt);
             _logger.LogInformation($"Schema '{result.Schema}' was created.");
 
             return 0;

@@ -2,7 +2,7 @@
 using SerialNumbers.Entity;
 using SerialNumbers.Repository;
 
-namespace SerialNumbers
+namespace SerialNumbers.Business
 {
     internal class SerialNumberSchemaProvider : ISerialNumberSchemaProvider
     {

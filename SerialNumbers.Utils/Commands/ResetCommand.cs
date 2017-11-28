@@ -5,18 +5,18 @@ using SerialNumbers.Business;
 
 namespace SerialNumbers.Utils.Commands
 {
-    internal class DeleteCommand : CommandLineApplication, ICommand
+    internal class ResetCommand : CommandLineApplication, ICommand
     {
-        private readonly ILogger<DeleteCommand> _logger;
+        private readonly ILogger<ResetCommand> _logger;
         private readonly ISerialNumberService _serialNumberService;
 
-        public DeleteCommand(ILogger<DeleteCommand> logger, ISerialNumberService serialNumberService)
+        public ResetCommand(ILogger<ResetCommand> logger, ISerialNumberService serialNumberService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _serialNumberService = serialNumberService ?? throw new ArgumentNullException(nameof(serialNumberService));
 
-            Name = "delete";
-            FullName = Description = "Command to delete the schema.";
+            Name = "reset";
+            FullName = Description = "Command to reset schema values.";
 
             HelpOption("-? | --help | -h");
 
@@ -28,9 +28,9 @@ namespace SerialNumbers.Utils.Commands
 
         public int Execute(CommandArgument schema, CommandArgument customer)
         {
-            _logger.LogInformation($"Schema with following parameters will be deleted: Schema={schema.Value}, Customer={customer.Value}");
-            _serialNumberService.DeleteSchema(schema.Value, customer.Value);
-            _logger.LogInformation("Schema was deleted.");
+            _logger.LogInformation($"Schema value with the following parameters will be deleted: Schema={schema.Value}, Customer={customer.Value}");
+            _serialNumberService.Reset(schema.Value, customer.Value);
+            _logger.LogInformation($"Schema '{schema.Value}' value was deleted.");
 
             return 0;
         }

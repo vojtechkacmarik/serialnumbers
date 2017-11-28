@@ -1,4 +1,4 @@
-﻿namespace SerialNumbers
+﻿namespace SerialNumbers.Business
 {
     internal interface ISerialNumberProvider
     {

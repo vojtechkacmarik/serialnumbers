@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -10,11 +13,14 @@ namespace SerialNumbers.Utils
 {
     public class Startup
     {
+        private const string JSON_CONFIG_FILE_PATH = "appsettings.json";
+
         public Startup()
         {
+            var baseDirectoryPath = Directory.GetCurrentDirectory();
             var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json");
+                .SetBasePath(baseDirectoryPath)
+                .AddJsonFile(JSON_CONFIG_FILE_PATH);
 
             Configuration = builder.Build();
         }
@@ -23,42 +29,53 @@ namespace SerialNumbers.Utils
 
         public void ConfigureServices(IServiceCollection services)
         {
+            AddConfiguration(services, Configuration);
             AddLogging(services);
-            AddConfiguration(services);
-            AddSerialNumbers(services);
+            AddSerialNumbers(services, Configuration.GetConnectionString(SerialNumberConstants.SERIAL_NUMBERS_CONNECTION));
             AddSerialNumbersCommands(services);
-            services.AddSingleton<ISerialNumbersCommandLineApplication, SerialNumbersCommandLineApplication>();
+            AddSerialNumbersCommandLineApplication(services);
         }
 
-        private static void AddSerialNumbersCommands(IServiceCollection services)
+        private static void AddConfiguration(IServiceCollection services, IConfigurationRoot configuration)
         {
-            services.AddSingleton<ICommand, CreateCommand>();
-            services.AddSingleton<ICommand, UpdateCommand>();
-            services.AddSingleton<ICommand, DeleteCommand>();
-            services.AddSingleton<ICommand, GetCommand>();
+            services.AddSingleton<IConfiguration>(configuration);
+            services.AddSingleton(configuration);
         }
 
         private static void AddLogging(IServiceCollection services)
         {
             var loggerFactory = new LoggerFactory()
                 .AddConsole(LogLevel.Debug)
-                .AddSerilog()
-                .AddDebug();
+                .AddSerilog();
 
             services.AddSingleton(loggerFactory);
             services.AddLogging();
         }
 
-        private void AddConfiguration(IServiceCollection services)
+        private static void AddSerialNumberCommand(IServiceCollection services, Type commandInterfaceType, Type commandType)
         {
-            services.AddSingleton<IConfiguration>(Configuration);
-            services.AddSingleton(Configuration);
+            services.AddSingleton(commandInterfaceType, commandType);
         }
 
-        private void AddSerialNumbers(IServiceCollection services)
+        private static void AddSerialNumbers(IServiceCollection services, string connectionString)
         {
-            services.AddSerialNumbers(Configuration.GetConnectionString(SerialNumberConstants.SERIAL_NUMBERS_CONNECTION));
+            services.AddSerialNumbers(connectionString);
             services.AddSerialNumbersLocalDateTimeProvider();
+        }
+
+        private static void AddSerialNumbersCommandLineApplication(IServiceCollection services)
+        {
+            services.AddSingleton<ISerialNumbersCommandLineApplication, SerialNumbersCommandLineApplication>();
+        }
+
+        private static void AddSerialNumbersCommands(IServiceCollection services)
+        {
+            var commandInterfaceType = typeof(ICommand);
+            var assemblyIncludingCommands = commandInterfaceType.GetTypeInfo().Assembly;
+            var commands = assemblyIncludingCommands.GetTypes()
+                .Where(type => type.GetTypeInfo().IsClass && !type.GetTypeInfo().IsAbstract && commandInterfaceType.IsAssignableFrom(type))
+                .ToArray();
+            commands.ForEach(commandType => AddSerialNumberCommand(services, commandInterfaceType, commandType));
         }
     }
 }
