@@ -2,7 +2,7 @@
 
 namespace SerialNumbers
 {
-    internal class SerialNumberSchemaDefinitionFactory : ISerialNumberSchemaDefinitionFactory
+    public class SerialNumberSchemaDefinitionFactory : ISerialNumberSchemaDefinitionFactory
     {
         public ISerialNumberSchemaDefinition Create(string mask, int seed, int increment, DateTime createdAt)
         {

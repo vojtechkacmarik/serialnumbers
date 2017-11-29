@@ -1,6 +1,6 @@
 ﻿namespace SerialNumbers
 {
-    internal class SerialNumberSchema : ISerialNumberSchema
+    public class SerialNumberSchema : ISerialNumberSchema
     {
         internal SerialNumberSchema(string schema, string customer, ISerialNumberSchemaDefinition schemaDefinition)
         {

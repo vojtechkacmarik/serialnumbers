@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SerialNumbers.Entity
 {
-    internal class Schema : EntityBase
+    public class Schema : EntityBase
     {
         public Schema()
         {

@@ -3,7 +3,7 @@ using SerialNumbers.Entity;
 
 namespace SerialNumbers.EntityFramework
 {
-    internal class SerialNumberDbContext : DbContext, ISerialNumberDbContext
+    public class SerialNumberDbContext : DbContext, ISerialNumberDbContext
     {
         public SerialNumberDbContext(DbContextOptions<SerialNumberDbContext> options)
             : base(options)

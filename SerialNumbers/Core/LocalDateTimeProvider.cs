@@ -2,7 +2,7 @@
 
 namespace SerialNumbers.Core
 {
-    internal class LocalDateTimeProvider : ISerialNumberDateTimeProvider
+    public class LocalDateTimeProvider : ISerialNumberDateTimeProvider
     {
         public DateTime Now => DateTime.Now;
     }

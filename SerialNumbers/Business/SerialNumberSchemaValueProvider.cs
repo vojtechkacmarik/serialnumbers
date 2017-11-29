@@ -5,7 +5,7 @@ using SerialNumbers.Entity;
 
 namespace SerialNumbers.Business
 {
-    internal class SerialNumberSchemaValueProvider : ISerialNumberSchemaValueProvider
+    public class SerialNumberSchemaValueProvider : ISerialNumberSchemaValueProvider
     {
         private readonly IEnumerable<ISerialNumberSchemaValueStrategy> _serialNumberSchemaValueStrategies;
 
@@ -16,6 +16,8 @@ namespace SerialNumbers.Business
 
         public int GetNextValue(SchemaDefinition schemaDefinition, SchemaValue currentSchemaValue)
         {
+            if (schemaDefinition == null) throw new ArgumentNullException(nameof(schemaDefinition));
+
             var suitableStrategy = Resolve(schemaDefinition, currentSchemaValue);
             if (suitableStrategy != null) return suitableStrategy.GetNextValue(schemaDefinition, currentSchemaValue);
 
@@ -25,7 +27,7 @@ namespace SerialNumbers.Business
         private ISerialNumberSchemaValueStrategy Resolve(SchemaDefinition schemaDefinition, SchemaValue currentSchemaValue)
         {
             return _serialNumberSchemaValueStrategies
-                .FirstOrDefault(strategy => strategy.IsSuitable(schemaDefinition, currentSchemaValue));
+                .SingleOrDefault(strategy => strategy.IsSuitable(schemaDefinition, currentSchemaValue));
         }
     }
 }

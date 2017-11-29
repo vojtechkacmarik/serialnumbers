@@ -2,7 +2,7 @@
 
 namespace SerialNumbers.Core
 {
-    internal interface ISerialNumberDateTimeProvider
+    public interface ISerialNumberDateTimeProvider
     {
         DateTime Now { get; }
     }

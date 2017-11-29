@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SerialNumbers.Entity
 {
-    internal class SchemaValue : EntityBase
+    public class SchemaValue : EntityBase
     {
         [ForeignKey(nameof(SchemaDefinitionId))]
         public SchemaDefinition SchemaDefinition { get; set; }

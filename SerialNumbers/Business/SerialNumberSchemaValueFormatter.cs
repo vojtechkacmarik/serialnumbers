@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SerialNumbers.Business
 {
@@ -13,10 +15,25 @@ namespace SerialNumbers.Business
 
         public string Format(string mask, int value, params string[] args)
         {
-            var isValid = _serialNumberSchemaValueValidator.IsValid(mask, args);
-            if (!isValid) throw new InvalidOperationException("The schema definition mask is incorrect. The number of arguments doesn't fit to expected parameters like '{0}' etc.!");
+            Validate(mask, args);
 
-            return string.Format(mask, value, args);
+            var parameters = BuildParameters(value, args);
+            return Format(mask, parameters);
+        }
+
+        private static object[] BuildParameters(int value, IEnumerable<string> args)
+        {
+            return args != null ? new object[] { value }.Concat(args).ToArray() : new object[] { value }.ToArray();
+        }
+
+        private static string Format(string mask, params object[] parameters)
+        {
+            return string.Format(mask, parameters);
+        }
+
+        private void Validate(string mask, string[] args)
+        {
+            _serialNumberSchemaValueValidator.Validate(mask, args);
         }
     }
 }

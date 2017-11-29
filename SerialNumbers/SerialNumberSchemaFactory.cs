@@ -2,7 +2,7 @@
 
 namespace SerialNumbers
 {
-    internal class SerialNumberSchemaFactory : ISerialNumberSchemaFactory
+    public class SerialNumberSchemaFactory : ISerialNumberSchemaFactory
     {
         private readonly ISerialNumberSchemaDefinitionFactory _serialNumberSchemaDefinitionFactory;
 

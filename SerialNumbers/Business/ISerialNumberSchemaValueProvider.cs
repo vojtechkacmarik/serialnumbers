@@ -2,7 +2,7 @@
 
 namespace SerialNumbers.Business
 {
-    internal interface ISerialNumberSchemaValueProvider
+    public interface ISerialNumberSchemaValueProvider
     {
         int GetNextValue(SchemaDefinition schemaDefinition, SchemaValue currentSchemaValue);
     }

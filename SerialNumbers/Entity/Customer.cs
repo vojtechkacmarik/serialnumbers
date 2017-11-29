@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SerialNumbers.Entity
 {
-    internal class Customer : EntityBase
+    public class Customer : EntityBase
     {
         public Customer()
         {

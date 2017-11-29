@@ -4,7 +4,7 @@ using SerialNumbers.Entity;
 
 namespace SerialNumbers.EntityFramework
 {
-    internal interface ISerialNumberDbContext : IDbContext, IDisposable
+    public interface ISerialNumberDbContext : IDbContext, IDisposable
     {
         /// <summary>
         /// Gets or sets the customers.

@@ -2,7 +2,7 @@
 
 namespace SerialNumbers.EntityFramework
 {
-    internal interface IDbContext : IUnitOfWork
+    public interface IDbContext : IUnitOfWork
     {
     }
 }

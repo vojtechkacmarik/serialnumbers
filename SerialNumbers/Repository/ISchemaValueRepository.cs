@@ -3,7 +3,7 @@ using SerialNumbers.UnitOfWork;
 
 namespace SerialNumbers.Repository
 {
-    internal interface ISchemaValueRepository : IUnitOfWork
+    public interface ISchemaValueRepository : IUnitOfWork
     {
         void DeleteAll(int schemaDefinitionId, int subjectId);
 

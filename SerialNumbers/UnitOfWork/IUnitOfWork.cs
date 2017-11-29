@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SerialNumbers.UnitOfWork
 {
-    internal interface IUnitOfWork
+    public interface IUnitOfWork
     {
         int SaveChanges();
 

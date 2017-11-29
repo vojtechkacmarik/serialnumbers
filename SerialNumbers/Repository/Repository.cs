@@ -12,7 +12,7 @@ using SerialNumbers.UnitOfWork;
 
 namespace SerialNumbers.Repository
 {
-    internal class Repository<TEntity> : IUnitOfWork, IRepository<TEntity> where TEntity : class, IEntity
+    public class Repository<TEntity> : IUnitOfWork, IRepository<TEntity> where TEntity : class, IEntity
     {
         private readonly SerialNumberDbContext _dbContext;
 

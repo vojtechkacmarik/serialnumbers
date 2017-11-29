@@ -4,7 +4,7 @@ using SerialNumbers.Repository;
 
 namespace SerialNumbers.Business
 {
-    internal class SerialNumberSchemaProvider : ISerialNumberSchemaProvider
+    public class SerialNumberSchemaProvider : ISerialNumberSchemaProvider
     {
         private readonly ISerialNumberSchemaDefinitionValidator _serialNumberSchemaDefinitionValidator;
         private readonly ICustomerRepository _customerRepository;
@@ -27,7 +27,7 @@ namespace SerialNumbers.Business
 
         public ISerialNumberSchema Create(string schema, string customer, string mask, int seed = 0, int increment = 1)
         {
-            Validate(mask, seed, increment);
+            Validate(mask, increment);
 
             var customerEntity = _customerRepository.GetOrAdd(customer);
             var schemaEntity = _schemaRepository.AddOrThrowIfExists(schema, customerEntity);
@@ -53,7 +53,7 @@ namespace SerialNumbers.Business
 
         public ISerialNumberSchema Update(string schema, string customer, string mask, int seed, int increment)
         {
-            Validate(mask, seed, increment);
+            Validate(mask, increment);
 
             var schemaEntity = _schemaRepository.AssertExists(schema, customer);
             var schemaDefinitionEntity = _schemaDefinitionRepository.Add(mask, seed, increment, schemaEntity);
@@ -62,10 +62,9 @@ namespace SerialNumbers.Business
             return CreateSchema(schemaEntity.Name, schemaEntity.Customer.Name, schemaDefinitionEntity);
         }
 
-        private void Validate(string mask, int seed, int increment)
+        private void Validate(string mask, int increment)
         {
-            var isValid = _serialNumberSchemaDefinitionValidator.IsValid(mask, seed, increment);
-            if (!isValid) throw new InvalidOperationException("Schema definition is not valid.");
+            _serialNumberSchemaDefinitionValidator.Validate(mask, increment);
         }
 
         private ISerialNumberSchema CreateSchema(string schema, string customer, SchemaDefinition schemaDefinition)

@@ -1,14 +1,35 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace SerialNumbers.Business
 {
-    internal class SerialNumberSchemaDefinitionValidator : ISerialNumberSchemaDefinitionValidator
+    public class SerialNumberSchemaDefinitionValidator : ISerialNumberSchemaDefinitionValidator
     {
-        public bool IsValid(string mask, int seed, int increment)
+        private const string PATTERN = @"\{0(\:[^\{\}]*[\d\W]+)?\}";
+
+        public void Validate(string mask, int increment)
         {
-            // TODO vkacmarik: validate mask
-            if (increment == 0) throw new InvalidOperationException("Invalid value 'increment': The increment has to be different from zero!");
-            return true;
+            if (mask == null) throw new ArgumentNullException(nameof(mask));
+
+            Validate(increment);
+            Validate(mask);
+        }
+
+        private static void Validate(string mask)
+        {
+            var match = Regex.Match(mask, PATTERN);
+            var isValid = match.Success;
+            if (!isValid)
+                throw new InvalidOperationException(
+                    $"Schema definition is not valid. Invalid value '{nameof(mask)}': The {nameof(mask)} has to contain at least one parameter placeholder like '{{0}}'!");
+        }
+
+        private static void Validate(int increment)
+        {
+            var isValid = increment != 0;
+            if (!isValid)
+                throw new InvalidOperationException(
+                    $"Schema definition is not valid. Invalid value '{nameof(increment)}': The {nameof(increment)} has to be different from zero!");
         }
     }
 }

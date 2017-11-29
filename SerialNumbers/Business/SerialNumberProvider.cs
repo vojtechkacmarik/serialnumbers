@@ -4,7 +4,7 @@ using SerialNumbers.Repository;
 
 namespace SerialNumbers.Business
 {
-    internal class SerialNumberProvider : ISerialNumberProvider
+    public class SerialNumberProvider : ISerialNumberProvider
     {
         private readonly ISchemaRepository _schemaRepository;
         private readonly ISchemaValueRepository _schemaValueRepository;

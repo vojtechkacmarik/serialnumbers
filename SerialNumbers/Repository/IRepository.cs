@@ -8,7 +8,7 @@ using SerialNumbers.UnitOfWork;
 
 namespace SerialNumbers.Repository
 {
-    internal interface IRepository<TEntity> where TEntity : class, IEntity
+    public interface IRepository<TEntity> where TEntity : class, IEntity
     {
         IUnitOfWork UnitOfWork { get; }
 

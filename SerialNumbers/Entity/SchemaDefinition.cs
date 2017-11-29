@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SerialNumbers.Entity
 {
-    internal class SchemaDefinition : EntityBase
+    public class SchemaDefinition : EntityBase
     {
         public SchemaDefinition()
         {

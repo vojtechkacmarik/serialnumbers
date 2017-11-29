@@ -2,7 +2,7 @@
 
 namespace SerialNumbers.Business
 {
-    internal interface ISerialNumberSchemaValueStrategy
+    public interface ISerialNumberSchemaValueStrategy
     {
         bool IsSuitable(SchemaDefinition schemaDefinition, SchemaValue currentSchemaValue);
 

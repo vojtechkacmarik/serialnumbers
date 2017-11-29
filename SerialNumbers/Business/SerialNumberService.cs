@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 namespace SerialNumbers.Business
 {
     /// <inheritdoc />
-    internal class SerialNumberService : ISerialNumberService
+    public class SerialNumberService : ISerialNumberService
     {
         private readonly ILogger<ISerialNumberService> _logger;
         private readonly ISerialNumberProvider _serialNumberProvider;

@@ -2,6 +2,6 @@
 {
     public interface ISerialNumberSchemaValueValidator
     {
-        bool IsValid(string mask, params string[] args);
+        void Validate(string mask, params string[] args);
     }
 }

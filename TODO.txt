@@ -1,18 +1,12 @@
--- asserts in business components - Assertion component
--- refactor in Repository - DbContext, DbSet - use interface ? for mocking
--- business - remove duplicity
--- validators + UTs
-
-Contracts - separate into own csproj SerialNumbers.Contracts
+-- asserts in business components - Assertion component (Throw)
+-- refactor in Repository - DbContext, DbSet - use interface ? for Moq
+-- business, helpers - remove duplicity
 
 Unit of Work - implement on business component instead of Repository layer
 
-base Command class
+base Command class (Schema+SchemaDefinition, SchemaValue)
 
-UTs
--- Autofixture, Automocker, StructureMap.AutoMocking
--- Moq
--- create some UTs
+finish UTs (repository, business)
 
 nuget publish - version, pack, assembly info, artifacts
 - nuget power tools

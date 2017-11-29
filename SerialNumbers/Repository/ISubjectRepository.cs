@@ -3,7 +3,7 @@ using SerialNumbers.UnitOfWork;
 
 namespace SerialNumbers.Repository
 {
-    internal interface ISubjectRepository : IUnitOfWork
+    public interface ISubjectRepository : IUnitOfWork
     {
         Subject GetOrAdd(string subject);
     }

@@ -1,7 +1,7 @@
 ﻿namespace SerialNumbers.Business
 {
-    internal interface ISerialNumberSchemaDefinitionValidator
+    public interface ISerialNumberSchemaDefinitionValidator
     {
-        bool IsValid(string mask, int seed, int increment);
+        void Validate(string mask, int increment);
     }
 }

@@ -6,7 +6,7 @@ using SerialNumbers.EntityFramework;
 
 namespace SerialNumbers.Repository
 {
-    internal class SchemaRepository : Repository<Schema>, ISchemaRepository
+    public class SchemaRepository : Repository<Schema>, ISchemaRepository
     {
         private readonly SerialNumberDbContext _dbContext;
 

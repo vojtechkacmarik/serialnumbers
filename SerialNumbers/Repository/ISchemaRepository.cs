@@ -3,7 +3,7 @@ using SerialNumbers.UnitOfWork;
 
 namespace SerialNumbers.Repository
 {
-    internal interface ISchemaRepository : IUnitOfWork
+    public interface ISchemaRepository : IUnitOfWork
     {
         Schema AddOrThrowIfExists(string schema, Customer customer);
 
