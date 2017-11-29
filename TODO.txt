@@ -1,16 +1,36 @@
--- asserts in business components - Assertion component (Throw)
--- refactor in Repository - DbContext, DbSet - use interface ? for Moq
--- business, helpers - remove duplicity
+Implementation
 
-Unit of Work - implement on business component instead of Repository layer
+- Refactoring
+-- remove redundant code (business, repository, helpers)
+-- asserts in business components - Assertion component (Throw) for repeatedly assert
 
-base Command class (Schema+SchemaDefinition, SchemaValue)
+- Unit of Work pattern 
+-- implement UoW on business component instead of Repository layer
+--- introduce some implementation of IUnitOfWork (wrapper for DbContext - in EF application)
 
-finish UTs (repository, business)
+- ICommand, CommandLineApplication
+-- introduce some base class, for example CommandBase
+--- Schema + SchemaDefinition
+--- SchemaValue
 
-nuget publish - version, pack, assembly info, artifacts
-- nuget power tools
 
-update README.md
-- add usage examples 
-- add startup (initialization) command for end application 
+Unit Tests
+- add some missing UTs
+-- business
+-- repository
+--- refactor in Repository layer (DbContext, DbSet etc) - use interface instead of specific implementation - mocking purposes (e.g. Moq)
+-- helpers
+
+
+NuGet
+- nuget pack (nupkg) - build artifacts
+- nuget publish
+-- version, assembly info
+- NuGet Power Tools
+-- VS Extension
+
+
+README.md
+- update
+-- add usage examples (samples)
+-- add startup (initialization) commands for end application (ConfigureServices)

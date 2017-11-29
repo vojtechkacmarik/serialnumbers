@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SerialNumbers", "SerialNumbers\SerialNumbers.csproj", "{559C2EF1-921A-47F4-9270-7809E010D24F}"
 EndProject
@@ -10,6 +10,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SerialNumbers.Utils", "SerialNumbers.Utils\SerialNumbers.Utils.csproj", "{F8A3C8E4-A3BE-4F54-88F1-0DD1F78B78A0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.SerialNumbers", "Tests.SerialNumbers\Tests.SerialNumbers.csproj", "{413E65F3-5DB9-478F-9CEE-759EE021E6E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C2940296-6870-48A2-9D67-8FA532BBF786}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+		TODO.txt = TODO.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
