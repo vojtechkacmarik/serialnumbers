@@ -1,5 +1,6 @@
 ﻿namespace SerialNumbers
 {
+    /// <inheritdoc />
     public class SerialNumberSchema : ISerialNumberSchema
     {
         internal SerialNumberSchema(string schema, string customer, ISerialNumberSchemaDefinition schemaDefinition)
@@ -9,8 +10,13 @@
             SchemaDefinition = schemaDefinition;
         }
 
+        /// <inheritdoc />
         public string Customer { get; }
+
+        /// <inheritdoc />
         public string Schema { get; }
+
+        /// <inheritdoc />
         public ISerialNumberSchemaDefinition SchemaDefinition { get; }
     }
 }

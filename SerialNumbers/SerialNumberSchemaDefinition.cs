@@ -2,6 +2,7 @@
 
 namespace SerialNumbers
 {
+    /// <inheritdoc />
     public class SerialNumberSchemaDefinition : ISerialNumberSchemaDefinition
     {
         internal SerialNumberSchemaDefinition(string mask, int seed, int increment, DateTime createdAt)
@@ -12,12 +13,16 @@ namespace SerialNumbers
             CreatedAt = createdAt;
         }
 
+        /// <inheritdoc />
         public DateTime CreatedAt { get; }
 
+        /// <inheritdoc />
         public int Increment { get; }
 
+        /// <inheritdoc />
         public string Mask { get; }
 
+        /// <inheritdoc />
         public int Seed { get; }
     }
 }

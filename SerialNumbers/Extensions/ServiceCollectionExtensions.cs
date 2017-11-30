@@ -8,6 +8,9 @@ using SerialNumbers.Repository;
 
 namespace SerialNumbers.Extensions
 {
+    /// <summary>
+    /// Extensions for <see cref="IServiceCollection"/>
+    /// </summary>
     public static class ServiceCollectionExtensions
     {
         /// <summary>

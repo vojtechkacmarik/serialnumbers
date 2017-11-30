@@ -4,6 +4,7 @@ using SerialNumbers.Repository;
 
 namespace SerialNumbers.Business
 {
+    /// <inheritdoc />
     public class SerialNumberProvider : ISerialNumberProvider
     {
         private readonly ISchemaRepository _schemaRepository;
@@ -11,6 +12,22 @@ namespace SerialNumbers.Business
         private readonly ISerialNumberSchemaValueFormatter _serialNumberSchemaValueFormatter;
         private readonly ISubjectRepository _subjectRepository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SerialNumberProvider"/> class.
+        /// </summary>
+        /// <param name="schemaValueRepository">The schema value repository.</param>
+        /// <param name="subjectRepository">The subject repository.</param>
+        /// <param name="schemaRepository">The schema repository.</param>
+        /// <param name="serialNumberSchemaValueFormatter">The serial number schema value formatter.</param>
+        /// <exception cref="ArgumentNullException">
+        /// serialNumberSchemaValueFormatter
+        /// or
+        /// schemaRepository
+        /// or
+        /// subjectRepository
+        /// or
+        /// schemaValueRepository
+        /// </exception>
         public SerialNumberProvider(ISchemaValueRepository schemaValueRepository,
             ISubjectRepository subjectRepository,
             ISchemaRepository schemaRepository,
@@ -22,6 +39,7 @@ namespace SerialNumbers.Business
             _schemaValueRepository = schemaValueRepository ?? throw new ArgumentNullException(nameof(schemaValueRepository));
         }
 
+        /// <inheritdoc />
         public string Current(string schema, string customer, string subject, params string[] args)
         {
             return GetValue(schema, customer, subject, (schemaEntity, subjectEntity) =>
@@ -39,6 +57,7 @@ namespace SerialNumbers.Business
             );
         }
 
+        /// <inheritdoc />
         public string Next(string schema, string customer, string subject, params string[] args)
         {
             return GetValue(schema, customer, subject, (schemaEntity, subjectEntity) =>
@@ -51,6 +70,7 @@ namespace SerialNumbers.Business
             );
         }
 
+        /// <inheritdoc />
         public void Reset(string schema, string customer, string subject)
         {
             var schemaEntity = _schemaRepository.AssertExists(schema, customer);

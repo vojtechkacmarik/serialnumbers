@@ -13,7 +13,7 @@ namespace SerialNumbers.Utils
             startup.ConfigureServices(services);
 
             var serviceProvider = services.BuildServiceProvider();
-            serviceProvider.BuildDatabase();
+            serviceProvider.BuildSerialNumbersDatabase();
 
             var app = serviceProvider.GetService<ISerialNumbersCommandLineApplication>();
             return app.Execute(args);

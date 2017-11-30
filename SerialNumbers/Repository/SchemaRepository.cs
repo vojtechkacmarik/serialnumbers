@@ -6,16 +6,24 @@ using SerialNumbers.EntityFramework;
 
 namespace SerialNumbers.Repository
 {
+    /// <summary>
+    /// Repository for Schema
+    /// </summary>
     public class SchemaRepository : Repository<Schema>, ISchemaRepository
     {
         private readonly SerialNumberDbContext _dbContext;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchemaRepository"/> class.
+        /// </summary>
+        /// <param name="dbContext">The database context.</param>
         public SchemaRepository(SerialNumberDbContext dbContext)
             : base(dbContext)
         {
             _dbContext = dbContext;
         }
 
+        /// <inheritdoc />
         public Schema AddOrThrowIfExists(string schema, Customer customer)
         {
             if (schema == null) throw new ArgumentNullException(nameof(schema));
@@ -35,6 +43,7 @@ namespace SerialNumbers.Repository
             return newSchema;
         }
 
+        /// <inheritdoc />
         public Schema AssertExists(string schema, string customer)
         {
             var existingEntity = Get(schema, customer);
@@ -43,6 +52,7 @@ namespace SerialNumbers.Repository
             throw new InvalidOperationException($"The {nameof(Schema)} (Schema={schema}, Customer={customer}) doesn't exist!");
         }
 
+        /// <inheritdoc />
         public void Delete(string schema, string customer)
         {
             if (schema == null) throw new ArgumentNullException(nameof(schema));
@@ -52,6 +62,7 @@ namespace SerialNumbers.Repository
             Delete(existingSchema);
         }
 
+        /// <inheritdoc />
         public Schema Get(string schema, string customer)
         {
             if (schema == null) throw new ArgumentNullException(nameof(schema));

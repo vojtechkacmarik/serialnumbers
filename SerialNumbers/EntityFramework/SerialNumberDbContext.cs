@@ -3,8 +3,17 @@ using SerialNumbers.Entity;
 
 namespace SerialNumbers.EntityFramework
 {
+    /// <summary>
+    /// DbContext for serial numbers
+    /// </summary>
+    /// <seealso cref="Microsoft.EntityFrameworkCore.DbContext" />
+    /// <seealso cref="SerialNumbers.EntityFramework.ISerialNumberDbContext" />
     public class SerialNumberDbContext : DbContext, ISerialNumberDbContext
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SerialNumberDbContext"/> class.
+        /// </summary>
+        /// <param name="options">The options.</param>
         public SerialNumberDbContext(DbContextOptions<SerialNumberDbContext> options)
             : base(options)
         {

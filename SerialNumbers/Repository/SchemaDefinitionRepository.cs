@@ -6,11 +6,20 @@ using SerialNumbers.EntityFramework;
 
 namespace SerialNumbers.Repository
 {
+    /// <summary>
+    /// Repository for SchemaDefinition
+    /// </summary>
     public class SchemaDefinitionRepository : Repository<SchemaDefinition>, ISchemaDefinitionRepository
     {
         private readonly ISerialNumberDateTimeProvider _dateTimeProvider;
         private readonly SerialNumberDbContext _dbContext;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchemaDefinitionRepository"/> class.
+        /// </summary>
+        /// <param name="dbContext">The database context.</param>
+        /// <param name="dateTimeProvider">The date time provider.</param>
+        /// <exception cref="ArgumentNullException">dateTimeProvider</exception>
         public SchemaDefinitionRepository(SerialNumberDbContext dbContext,
             ISerialNumberDateTimeProvider dateTimeProvider)
             : base(dbContext)
@@ -19,6 +28,7 @@ namespace SerialNumbers.Repository
             _dateTimeProvider = dateTimeProvider ?? throw new ArgumentNullException(nameof(dateTimeProvider));
         }
 
+        /// <inheritdoc />
         public SchemaDefinition Add(string mask, int seed, int increment, Schema schema)
         {
             var newSchemaDefinition = new SchemaDefinition
@@ -34,6 +44,7 @@ namespace SerialNumbers.Repository
             return newSchemaDefinition;
         }
 
+        /// <inheritdoc />
         public SchemaDefinition GetCurrent(int schemaId)
         {
             return _dbContext.Set<SchemaDefinition>()

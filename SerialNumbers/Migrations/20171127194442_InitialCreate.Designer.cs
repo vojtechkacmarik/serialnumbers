@@ -14,6 +14,7 @@ namespace SerialNumbers.Migrations
     [Migration("20171127194442_InitialCreate")]
     partial class InitialCreate
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

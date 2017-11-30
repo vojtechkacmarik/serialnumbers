@@ -3,10 +3,12 @@ using System.Text.RegularExpressions;
 
 namespace SerialNumbers.Business
 {
+    /// <inheritdoc />
     public class SerialNumberSchemaDefinitionValidator : ISerialNumberSchemaDefinitionValidator
     {
         private const string PATTERN = @"\{0(\:[^\{\}]*[\d\W]+)?\}";
 
+        /// <inheritdoc />
         public void Validate(string mask, int increment)
         {
             if (mask == null) throw new ArgumentNullException(nameof(mask));

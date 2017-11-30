@@ -4,6 +4,11 @@ using SerialNumbers.Entity;
 
 namespace SerialNumbers.EntityFramework
 {
+    /// <summary>
+    /// Abstraction for EF DbContext for serial numbers
+    /// </summary>
+    /// <seealso cref="SerialNumbers.EntityFramework.IDbContext" />
+    /// <seealso cref="System.IDisposable" />
     public interface ISerialNumberDbContext : IDbContext, IDisposable
     {
         /// <summary>

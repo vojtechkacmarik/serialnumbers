@@ -5,12 +5,14 @@ using System.Text.RegularExpressions;
 
 namespace SerialNumbers.Business
 {
+    /// <inheritdoc />
     public class SerialNumberSchemaValueValidator : ISerialNumberSchemaValueValidator
     {
         private const string PARAMETER_END_BRACKET = "}";
         private const string PARAMETER_FORMAT_SEPARATOR = ":";
         private const string PATTERN = @"\{\d+(\:[^\{\}]*[\d\W]+)?\}";
 
+        /// <inheritdoc />
         public void Validate(string mask, params string[] args)
         {
             if (mask == null) throw new ArgumentNullException(nameof(mask));

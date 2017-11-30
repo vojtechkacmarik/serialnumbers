@@ -10,6 +10,19 @@ namespace SerialNumbers.Business
         private readonly ISerialNumberProvider _serialNumberProvider;
         private readonly ISerialNumberSchemaProvider _serialNumberSchemaProvider;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SerialNumberService"/> class.
+        /// </summary>
+        /// <param name="serialNumberSchemaProvider">The serial number schema provider.</param>
+        /// <param name="serialNumberProvider">The serial number provider.</param>
+        /// <param name="logger">The logger.</param>
+        /// <exception cref="ArgumentNullException">
+        /// logger
+        /// or
+        /// serialNumberProvider
+        /// or
+        /// serialNumberSchemaProvider
+        /// </exception>
         public SerialNumberService(ISerialNumberSchemaProvider serialNumberSchemaProvider,
             ISerialNumberProvider serialNumberProvider,
             ILogger<ISerialNumberService> logger)

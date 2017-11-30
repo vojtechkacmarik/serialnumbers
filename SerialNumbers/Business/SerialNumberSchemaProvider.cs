@@ -4,6 +4,7 @@ using SerialNumbers.Repository;
 
 namespace SerialNumbers.Business
 {
+    /// <inheritdoc />
     public class SerialNumberSchemaProvider : ISerialNumberSchemaProvider
     {
         private readonly ISerialNumberSchemaDefinitionValidator _serialNumberSchemaDefinitionValidator;
@@ -12,6 +13,25 @@ namespace SerialNumbers.Business
         private readonly ISchemaRepository _schemaRepository;
         private readonly ISerialNumberSchemaFactory _serialNumberSchemaFactory;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SerialNumberSchemaProvider"/> class.
+        /// </summary>
+        /// <param name="customerRepository">The customer repository.</param>
+        /// <param name="schemaRepository">The schema repository.</param>
+        /// <param name="schemaDefinitionRepository">The schema definition repository.</param>
+        /// <param name="serialNumberSchemaFactory">The serial number schema factory.</param>
+        /// <param name="serialNumberSchemaDefinitionValidator">The serial number schema definition validator.</param>
+        /// <exception cref="ArgumentNullException">
+        /// serialNumberSchemaDefinitionValidator
+        /// or
+        /// serialNumberSchemaFactory
+        /// or
+        /// schemaDefinitionRepository
+        /// or
+        /// schemaRepository
+        /// or
+        /// customerRepository
+        /// </exception>
         public SerialNumberSchemaProvider(ICustomerRepository customerRepository,
             ISchemaRepository schemaRepository,
             ISchemaDefinitionRepository schemaDefinitionRepository,
@@ -25,6 +45,7 @@ namespace SerialNumbers.Business
             _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
         }
 
+        /// <inheritdoc />
         public ISerialNumberSchema Create(string schema, string customer, string mask, int seed = 0, int increment = 1)
         {
             Validate(mask, increment);
@@ -37,12 +58,14 @@ namespace SerialNumbers.Business
             return _serialNumberSchemaFactory.Create(schemaEntity.Name, customerEntity.Name, mask, seed, increment, schemaDefinitionEntity.CreatedAt);
         }
 
+        /// <inheritdoc />
         public void Delete(string schema, string customer)
         {
             _schemaRepository.Delete(schema, customer);
             _schemaRepository.SaveChanges();
         }
 
+        /// <inheritdoc />
         public ISerialNumberSchema Get(string schema, string customer)
         {
             var schemaEntity = _schemaRepository.Get(schema, customer);
@@ -51,6 +74,7 @@ namespace SerialNumbers.Business
                 : null;
         }
 
+        /// <inheritdoc />
         public ISerialNumberSchema Update(string schema, string customer, string mask, int seed, int increment)
         {
             Validate(mask, increment);

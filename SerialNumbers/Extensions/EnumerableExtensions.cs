@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace SerialNumbers.Extensions
 {
+    /// <summary>
+    /// Extensions for enumerable
+    /// </summary>
     public static class EnumerableExtensions
     {
         /// <summary>

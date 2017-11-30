@@ -5,8 +5,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace SerialNumbers.EntityFramework
 {
+    /// <summary>
+    /// Design time DbContext factory
+    /// </summary>
     public class SerialNumberDesignTimeDbContextFactory : IDesignTimeDbContextFactory<SerialNumberDbContext>
     {
+        /// <inheritdoc />
         public SerialNumberDbContext CreateDbContext(string[] args)
         {
             var configuration = new ConfigurationBuilder()
