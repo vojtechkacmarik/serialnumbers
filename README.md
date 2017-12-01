@@ -23,7 +23,7 @@ At the application start we have to configure services to use SerialNumbers comp
 When services are configured we have to call method `BuildSerialNumbersDatabase` to init database by EF migration. We can do that as you can see below.
 ```c#
     var serviceProvider = services.BuildServiceProvider();
-    serviceProvider.BuildSerialNumbersDatabase();
+    serviceProvider.BuildDatabase();
 ```
 
 ## Public API
