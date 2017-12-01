@@ -8,12 +8,12 @@ namespace SerialNumbers.Utils.Commands
     internal class GetSchemaCommand : CommandLineApplication, ICommand
     {
         private readonly ILogger<GetSchemaCommand> _logger;
-        private readonly ISerialNumberService _serialNumber;
+        private readonly ISerialNumberService _serialNumberService;
 
         public GetSchemaCommand(ILogger<GetSchemaCommand> logger, ISerialNumberService serialNumberService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _serialNumber = serialNumberService ?? throw new ArgumentNullException(nameof(serialNumberService));
+            _serialNumberService = serialNumberService ?? throw new ArgumentNullException(nameof(serialNumberService));
 
             Name = "get-schema";
             FullName = Description = "Command to get the schema.";
@@ -29,7 +29,7 @@ namespace SerialNumbers.Utils.Commands
         public int Execute(CommandArgument schema, CommandArgument customer)
         {
             _logger.LogInformation($"Schema with following parameters will be returned: Schema={schema.Value}, Customer={customer.Value}");
-            var result = _serialNumber.GetSchema(schema.Value, customer.Value);
+            var result = _serialNumberService.GetSchema(schema.Value, customer.Value);
             _logger.LogInformation(result != null
                 ? $"Schema 'Schema={result.Schema}, Customer={result.Customer}' was returned."
                 : "Schema was not found.");

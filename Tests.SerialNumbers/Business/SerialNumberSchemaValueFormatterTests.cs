@@ -38,6 +38,26 @@ namespace Tests.SerialNumbers.Business
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase("{0}", 1, "1")]
+        [TestCase("P{0}", 100, "P100")]
+        [TestCase("INV-{0}/{1}", 10, "INV-10/2017", "2017")]
+        [TestCase("INV-{0}/{1}-{2}", 1780, "INV-1780/2017-Ext", "2017", "Ext")]
+        [TestCase("USER{0:0000}", 20, "USER0020")]
+        [TestCase("USER{0:0000}-{1}", 20, "USER0020-Europe", "Europe")]
+        [TestCase("HS-{0}/{1}", 102063, "HS-102063/Headphones", "Headphones")]
+        public void Format_WhenIsValidAndValueIsStrictlyDefined_ShouldReturnExpected(string mask, int value, string expectedValue, params string[] args)
+        {
+            _serialNumberSchemaValueValidatorMock
+                .Setup(x => x.Validate(mask, args))
+                .Callback(
+                    (string maskInner, string[] argsInner) =>
+                    {
+                    });
+
+            var actual = SystemUnderTest.Format(mask, value, args);
+            Assert.AreEqual(expectedValue, actual);
+        }
+
         [Test]
         public void Format_ShouldCallValidateFromSerialNumberSchemaValueValidatorOnce()
         {

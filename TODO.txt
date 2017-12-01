@@ -23,14 +23,5 @@ Unit Tests
 
 
 NuGet
-- nuget pack (nupkg) - build artifacts
-- nuget publish
--- version, assembly info
-- NuGet Power Tools
--- VS Extension
-
-
-README.md
-- update
--- add usage examples (samples)
--- add startup (initialization) commands for end application (ConfigureServices)
+- nuget publish (via DevOps, CI, VSTS)
+-- version (beta, rc, 1.0.0)
